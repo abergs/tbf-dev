@@ -32,7 +32,11 @@ exports.createPages = ({ actions, graphql }) => {
     const posts = result.data.allMarkdownRemark.edges
 
     posts.forEach(edge => {
+      
       const id = edge.node.id
+
+      console.log("PAGE ID", edge.node);
+      if (edge.node.frontmatter.templateKey != "fragment") {
       createPage({
         path: edge.node.fields.slug,
         tags: edge.node.frontmatter.tags,
@@ -44,6 +48,7 @@ exports.createPages = ({ actions, graphql }) => {
           id,
         },
       })
+    }
     })
 
     // Tag pages:

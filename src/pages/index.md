@@ -6,6 +6,7 @@ heading: Great coffee with a conscience
 subheading: Support sustainable farming while enjoying a cup
 mainpitch:
   title: Why Kaldi
+  button: Get involved
   description: >
     Bringing awareness to mental health, climate change and nature conservation
 description: >-
@@ -13,6 +14,12 @@ description: >-
   java’s origin and support the farmers that grew it. We take coffee production,
   roasting and brewing seriously and we’re glad to pass that knowledge to
   anyone.
+letter:
+  title: "A letter"
+  description: "From **us**"
+  letterBody: >
+    This is a lot
+  button: Get involved?
 intro:
   blurbs:
     - image: /img/coffee.png

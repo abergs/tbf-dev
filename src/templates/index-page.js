@@ -12,6 +12,7 @@ export const IndexPageTemplate = ({
   heading,
   subheading,
   mainpitch,
+  letter,
   description,
   intro,
 }) => (
@@ -64,54 +65,49 @@ export const IndexPageTemplate = ({
         </h3>
       </div>
     </div> */}
-    <section className="section">
+    <section className="section landing-section1">
       <div className="container">
         <div className="section">
           <div className="columns">
             <div className="column is-6">
-              <img src={ !!image.childImageSharp ? image.childImageSharp.fluid.src : image} alt="" />
+            <div className="content">
+              <img src={ !image ? null :  !!image.childImageSharp ? image.childImageSharp.fluid.src : image} alt="" />
               <p>{mainpitch.description}</p>
+              </div>
+              <div className="columns">
+                  <div className="column is-12 has-text-left">
+                    <Link className="btn" to="/products">{mainpitch.button}</Link>
+                  </div>
+                </div>
             </div>
             <div className="column is-6">
-              <div className="content">
-                <div className="content">
-                  <div className="tile">
-                    <h1 className="title">{mainpitch.title}</h1>
-                  </div>
-                  <div className="tile">
-                    <h3 className="subtitle">{mainpitch.description}</h3>
-                  </div>
-                </div>
-                <div className="columns">
-                  <div className="column is-12">
-                    <h3 className="has-text-weight-semibold is-size-2">
-                      {heading}
-                    </h3>
-                    <p>{description}</p>
-                  </div>
-                </div>
-                <Features gridItems={intro.blurbs} />
-                <div className="columns">
-                  <div className="column is-12 has-text-centered">
-                    <Link className="btn" to="/products">
-                      See all products
-                    </Link>
-                  </div>
-                </div>
-                <div className="column is-12">
-                  <h3 className="has-text-weight-semibold is-size-2">
-                    Latest stories
-                  </h3>
-                  <BlogRoll />
-                  <div className="column is-12 has-text-centered">
-                    <Link className="btn" to="/blog">
-                      Read more
-                    </Link>
-                  </div>
-                </div>
-              </div>
+            bild på tim
             </div>
-          </div>
+          </div>          
+        </div>
+      </div>
+    </section>
+
+
+    <section className="section landing-section2">
+      <div className="container">
+        <div className="section">
+          <div className="columns">
+            <div className="column is-6">
+            <div className="content">              
+              <h2>{letter.title}</h2>
+              <p>{letter.description}</p>
+              </div>
+              <div className="columns">
+                  <div className="column is-12 has-text-left">
+                    <Link className="btn" to="/products">{mainpitch.button}</Link>
+                  </div>
+                </div>
+            </div>
+            <div className="column is-6">
+            bild på tim
+            </div>
+          </div>          
         </div>
       </div>
     </section>
@@ -124,6 +120,7 @@ IndexPageTemplate.propTypes = {
   heading: PropTypes.string,
   subheading: PropTypes.string,
   mainpitch: PropTypes.object,
+  letter: PropTypes.object,
   description: PropTypes.string,
   intro: PropTypes.shape({
     blurbs: PropTypes.array,
@@ -131,6 +128,8 @@ IndexPageTemplate.propTypes = {
 }
 
 const IndexPage = ({ data }) => {
+  const section2 = data;
+  console.log("SEcTION2", section2);
   const { frontmatter } = data.markdownRemark
 
   return (
@@ -141,6 +140,7 @@ const IndexPage = ({ data }) => {
         heading={frontmatter.heading}
         subheading={frontmatter.subheading}
         mainpitch={frontmatter.mainpitch}
+        letter={frontmatter.letter}
         description={frontmatter.description}
         intro={frontmatter.intro}
       />
@@ -150,6 +150,9 @@ const IndexPage = ({ data }) => {
 
 IndexPage.propTypes = {
   data: PropTypes.shape({
+    section: PropTypes.shape({
+      frontmatter: PropTypes.object,
+    }),
     markdownRemark: PropTypes.shape({
       frontmatter: PropTypes.object,
     }),
@@ -160,12 +163,17 @@ export default IndexPage
 
 export const pageQuery = graphql`
   query IndexPageTemplate {
+    section: markdownRemark(frontmatter: { templateKey: { eq: "fragment" } }) {
+      frontmatter {
+        title
+      }
+    }
     markdownRemark(frontmatter: { templateKey: { eq: "index-page" } }) {
       frontmatter {
         title
         image {
           childImageSharp {
-            fluid(maxWidth: 2048, quality: 100) {
+            fluid(maxWidth: 500, quality: 100) {
               ...GatsbyImageSharpFluid
             }
           }
@@ -175,6 +183,13 @@ export const pageQuery = graphql`
         mainpitch {
           title
           description
+          button
+        }
+        letter {
+          title
+          description
+          letterBody
+          button
         }
         description
         intro {

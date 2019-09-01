@@ -16,7 +16,7 @@ export const IndexPageTemplate = ({
   intro,
 }) => (
   <div>
-    <div
+    {/* <div
       className="full-width-image margin-top-0"
       style={{
         backgroundImage: `url(${
@@ -63,12 +63,16 @@ export const IndexPageTemplate = ({
           {subheading}
         </h3>
       </div>
-    </div>
-    <section className="section section--gradient">
+    </div> */}
+    <section className="section">
       <div className="container">
         <div className="section">
           <div className="columns">
-            <div className="column is-10 is-offset-1">
+            <div className="column is-6">
+              <img src={ !!image.childImageSharp ? image.childImageSharp.fluid.src : image} alt="" />
+              <p>{mainpitch.description}</p>
+            </div>
+            <div className="column is-6">
               <div className="content">
                 <div className="content">
                   <div className="tile">
